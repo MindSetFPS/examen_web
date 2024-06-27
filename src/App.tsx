@@ -1,15 +1,21 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Test from './Test'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentQuestion, setCurrentQuestion] = useState(0)
 
   return (
     <>
-      <Test />
+      {
+        currentQuestion == 0 ? 
+          <>
+            "presion para empezar el test"
+            <button> Empezar </button> 
+          </>
+        : 
+          <Test />
+      }
     </>
   )
 }
