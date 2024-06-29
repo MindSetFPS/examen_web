@@ -1,8 +1,8 @@
 export interface Questions {
-  id: string;
-  question: string;
-  answer: string;
+  id: number;
+  text: string;
+  correctAnswer: string;
   completed: boolean;
-  options: string[];
+  answerOptions: string[];
 }
 export type ListOfQuestions = Questions[];

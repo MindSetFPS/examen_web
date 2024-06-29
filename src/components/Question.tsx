@@ -5,45 +5,45 @@ interface Props extends Questions {
   onRemoveAns: (id: string) => void;
   onSelectionOption: (id: string, selectedOption: string) => void;
 }
-export const ToTest: React.FC<Props> = ({
+export const Question: React.FC<Questions> = ({
   id,
-  question,
-  options,
-  answer,
+  text,
+  answerOptions,
+  correctAnswer,
   completed,
-  onRemoveAns,
-  onSelectionOption,
+  // onRemoveAns,
+  // onSelectionOption,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleOptionChange = (option: string) => {
     setSelectedOption(option);
-    onSelectionOption(id, option);
+    // onSelectionOption(id, option);
   };
   return (
     <div className="view">
-      <label>{question}</label>
+      <label>{text}</label>
       <div>
-        {options.map((option) => (
-          <div key={option}>
+        {answerOptions.map((answerOption) => (
+          <div key={id}>
             <input
               type="radio"
-              id={`${id}-${option}`}
+              id={`${id}`}
               name={`question-${id}`}
-              value={option}
-              checked={selectedOption === option}
-              onChange={() => handleOptionChange(option)}
+              value={answerOption}
+              // checked={selectedOption === option}
+              // onChange={() => handleOptionChange(option)}
             />
-            <label htmlFor={`${id}-${option}`}>{option}</label>
+            <label htmlFor={`${id}-${answerOption}`}>{answerOption}</label>
           </div>
         ))}
       </div>
-      <button
+      {/* <button
         className="destroy"
         onClick={() => {
           onRemoveAns(id);
         }}
-      />
+      > Enviar </button> */}
     </div>
   );
 };

@@ -1,11 +1,11 @@
 interface ToTestItemProps {
-  id: string;
+  id: number;
   question: string;
   answer: string;
   completed: boolean;
 }
 
-export const ToTestItem: React.FC<ToTestItemProps> = ({
+export const Answer: React.FC<ToTestItemProps> = ({
   id,
   question,
   answer,
