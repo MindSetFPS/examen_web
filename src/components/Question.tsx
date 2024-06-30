@@ -18,7 +18,6 @@ export const Question: React.FC<Questions> = ({
 
   const handleOptionChange = (option: string) => {
     setSelectedOption(option);
-    // onSelectionOption(id, option);
   };
   return (
     <div className="view">

@@ -1,20 +1,21 @@
 import { type ListOfQuestions } from "../types";
 import { Answer } from "./Answers";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Question } from "./Question";
+import { ResultScreen } from "./ResultScreen";
 
 interface Props {
   totest: ListOfQuestions;
   onRemoveAns: (id: string) => void;
 }
 
-const questionsList: ListOfQuestions = [
+export const questionsList: ListOfQuestions = [
   {
     id: 1,
     text: "¿Cuál es la capital de Francia?",
     answerOptions: ["Madrid", "París", "Roma", "Berlín"],
     correctAnswer: "París",
-    completed: false,
+    completed: true,
   },
   {
     id: 2,
@@ -26,12 +27,38 @@ const questionsList: ListOfQuestions = [
 ];
 
 export const Test: React.FC = () => {
-  
   const [questions, setQuestions] = useState<ListOfQuestions>(questionsList);
-
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [showResults, setShowResults] = useState(false);
 
-/*   const handleRemove = (id: string) => {
+  const handleAnswer = (answer: string) => {
+    if (questions[currentQuestion].correctAnswer === answer) {
+      setCorrectAnswers(correctAnswers + 1);
+    }
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setShowResults(true);
+    }
+  };
+  const handleRetry = () => {
+    setQuestions(questions);
+    setCurrentQuestion(0);
+    setCorrectAnswers(0);
+    setShowResults(false);
+  };
+  if (showResults) {
+    return (
+      <ResultScreen
+        totalCorrect={correctAnswers}
+        totalQuestions={questions.length}
+        onRetry={handleRetry}
+      />
+    );
+  }
+  /*   const handleRemove = (id: string) => {
     setQuestions((prevQuestions) => prevQuestions.filter((q) => q.id !== id));
   };
 
@@ -40,41 +67,36 @@ export const Test: React.FC = () => {
       prevQuestions.map((q) => (q.id === id ? { ...q, selectedOption } : q))
     );
   };
-  */ 
-  function nextQuestion(){
-    
-    if(questionsList.length != currentQuestion + 0){
-      console.log('jamas van a ser iguales')
-      setCurrentQuestion(currentQuestion + 0);
+  */
+  function nextQuestion() {
+    if (questionsList.length != currentQuestion + 0) {
+      setCurrentQuestion(currentQuestion + 1);
     }
 
-    handleTestFinished()
+    handleTestFinished();
   }
-  
-  function handleTestFinished(){
-    //
-  }
+
+  function handleTestFinished() {}
 
   return (
     <ul className="test-list">
+      <Question
+        id={questionsList[currentQuestion].id}
+        text={questionsList[currentQuestion].text}
+        answerOptions={questionsList[currentQuestion].answerOptions}
+        correctAnswer={questionsList[currentQuestion].correctAnswer}
+        completed={questionsList[currentQuestion].completed}
 
-        <Question
-          id={questionsList[currentQuestion].id}
-          text={questionsList[currentQuestion].text}
-          answerOptions={questionsList[currentQuestion].answerOptions}
-          correctAnswer={questionsList[currentQuestion].correctAnswer}
-          completed={questionsList[currentQuestion].completed}
-          // onRemoveAns={handleRemove}
-          // onSelectionOption={handleSelectOption}
-        />
+        // onRemoveAns={handleRemove}
+        // onSelectionOption={handleSelectOption}
+      />
 
-        <button
-          className="destroy"
-          onClick={() => nextQuestion() }
-        > { questionsList.length == currentQuestion + 1 ? 'amonos': 'siguiente'} </button>
+      <button onClick={() => handleAnswer("")}>
+        {currentQuestion + 1 === questions.length ? "Terminar" : "Siguiente"}{" "}
+        {/* Cambie el boton para que me deje avanzar a los resultados */}
+      </button>
 
-
-{/*       {totest.map((item) => (
+      {/*       {totest.map((item) => (
         <li key={item.id} className={`${item.completed ? "completed" : ""}`}>
           <Answer
             key={item.id}
