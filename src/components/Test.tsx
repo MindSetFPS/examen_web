@@ -17,6 +17,13 @@ const questionsList: ListOfQuestions = [
     correctAnswer: "Nilo",
     completed: false,
   },
+  {
+    id: 3,
+    text: "¿Cuál es el animal más grande el mundo?",
+    answerOptions: ["Jirafa", "Elefante", "Ballena azul", "Hipopotamo"],
+    correctAnswer: "Ballena azul",
+    completed: false,
+  },
 ];
 
 interface Props {
@@ -28,7 +35,7 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const [correctAnswerCounter, setCorrectAnswerCounter] = useState<number>(0);
-  const [showNextButton, setShowNextButton] = useState<boolean>(false)
+  const [showNextButton, setShowNextButton] = useState<boolean>(false);
 
   function nextQuestion() {
     if (questionsList.length != currentQuestion + 1) {
@@ -36,18 +43,18 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
     }
 
     if (questionsList.length == currentQuestion + 1) {
-      handleTestFinished()
+      handleTestFinished();
     }
   }
 
   function handleTestFinished() {
-    console.log('test finished')
-    onTestFinished(correctAnswerCounter)
+    console.log("test finished");
+    onTestFinished(correctAnswerCounter);
   }
 
   return (
     <ul className="test-list rounded-xl shadow-lg p-2">
-    { correctAnswerCounter }
+      {correctAnswerCounter}
       <Question
         id={questionsList[currentQuestion].id}
         text={questionsList[currentQuestion].text}
@@ -58,18 +65,13 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
         onShowNextButton={() => setShowNextButton(true)}
       />
 
-      {
-        showNextButton ?
-          <button
-            className="destroy"
-            onClick={() => nextQuestion()}
-          >
-            {questionsList.length == currentQuestion + 1 ? 'amonos' : 'siguiente'}
-          </button>
-          :
-          ''
-        }
-
+      {showNextButton ? (
+        <button className="destroy" onClick={() => nextQuestion()}>
+          {questionsList.length == currentQuestion + 1 ? "amonos" : "siguiente"}
+        </button>
+      ) : (
+        ""
+      )}
     </ul>
   );
 };
