@@ -4,6 +4,9 @@ import { type Questions } from "../types";
 interface Props extends Questions {
   increaseScore: () => void;
   onShowNextButton: () => void;
+  onChangeQuestion: () => void;
+  numberOfQuestions: number;
+  currentQuestion: number;
 }
 export const Question: React.FC<Props> = ({
   id,
@@ -11,28 +14,52 @@ export const Question: React.FC<Props> = ({
   answerOptions,
   correctAnswer,
   completed,
+  numberOfQuestions,
+  currentQuestion,
   increaseScore,
-  onShowNextButton
+  onShowNextButton,
+  onChangeQuestion
 }) => {
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [showNextButton, setShowNextButton] = useState<boolean>(false)
 
   const handleOptionClick = (option: string) => {
-    setSelectedOption(option);
-    if (option == correctAnswer){
-      increaseScore()
+    console.log(selectedOption == null)
+    if (selectedOption == null) {
+      setSelectedOption(option);
+      if (selectedOption == correctAnswer) {
+        increaseScore()
+      }
     }
-    onShowNextButton()
+
+    setShowNextButton(!showNextButton)
   }
+  
+  function nextQuestion(e) {
+    e.preventDefault()
+    // if (numberOfQuestions != currentQuestion + 1) {
+      // setCurrentQuestion(currentQuestion + 1);
+      onChangeQuestion() 
+    // }
+    
+    // if (numberOfQuestions == currentQuestion + 1) {
+      // handleTestFinished()
+    // }
+    setSelectedOption(null)
+    setShowNextButton(false)
+  }
+
 
   return (
     <div className="view">
       <h2 className="font-medium text-3xl">{text}</h2>
       <div >
+        {selectedOption}
         <form>
           {
             answerOptions.map((option) => (
-              <div className={`bg-white ${option == correctAnswer ? 'bg-green-100' : 'bg-red-100'}`}>
+              <div >
                 <span >
                   {'🍿'}
                 </span>
@@ -45,6 +72,19 @@ export const Question: React.FC<Props> = ({
               </div>
             ))
           }
+
+          {
+            showNextButton ?
+              <button
+                className="destroy"
+                onClick={(e) => nextQuestion(e)}
+              >
+                {numberOfQuestions == currentQuestion + 1 ? 'amonos' : 'siguiente'}
+              </button>
+              :
+              ''
+          }
+
         </form>
       </div>
     </div>)

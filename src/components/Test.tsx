@@ -1,5 +1,5 @@
 import { type ListOfQuestions } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Question } from "./Question";
 
 const questionsList: ListOfQuestions = [
@@ -24,21 +24,8 @@ interface Props {
 }
 
 export const Test: React.FC<Props> = ({ onTestFinished }) => {
-  // const [questions, setQuestions] = useState<ListOfQuestions>(questionsList);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-
   const [correctAnswerCounter, setCorrectAnswerCounter] = useState<number>(0);
-  const [showNextButton, setShowNextButton] = useState<boolean>(false)
-
-  function nextQuestion() {
-    if (questionsList.length != currentQuestion + 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    }
-
-    if (questionsList.length == currentQuestion + 1) {
-      handleTestFinished()
-    }
-  }
 
   function handleTestFinished() {
     console.log('test finished')
@@ -47,7 +34,7 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
 
   return (
     <ul className="test-list rounded-xl shadow-lg p-2">
-    { correctAnswerCounter }
+      {correctAnswerCounter}
       <Question
         id={questionsList[currentQuestion].id}
         text={questionsList[currentQuestion].text}
@@ -55,21 +42,19 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
         correctAnswer={questionsList[currentQuestion].correctAnswer}
         completed={questionsList[currentQuestion].completed}
         increaseScore={() => setCorrectAnswerCounter(correctAnswerCounter + 1)}
-        onShowNextButton={() => setShowNextButton(true)}
-      />
+        numberOfQuestions={questionsList.length}
+        currentQuestion={currentQuestion}
+        onChangeQuestion={() => {
+          if (currentQuestion + 1 == questionsList.length) {
+            handleTestFinished()
+          }
 
-      {
-        showNextButton ?
-          <button
-            className="destroy"
-            onClick={() => nextQuestion()}
-          >
-            {questionsList.length == currentQuestion + 1 ? 'amonos' : 'siguiente'}
-          </button>
-          :
-          ''
+          if (currentQuestion + 1 != questionsList.length) {
+            setCurrentQuestion(currentQuestion + 1)
+          }
         }
-
+        }
+      />
     </ul>
   );
 };
