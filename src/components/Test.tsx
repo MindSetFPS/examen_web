@@ -1,5 +1,5 @@
 import { type ListOfQuestions } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Question } from "./Question";
 
 export const questionsList: ListOfQuestions = [
@@ -31,9 +31,7 @@ interface Props {
 }
 
 export const Test: React.FC<Props> = ({ onTestFinished }) => {
-  // const [questions, setQuestions] = useState<ListOfQuestions>(questionsList);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-
   const [correctAnswerCounter, setCorrectAnswerCounter] = useState<number>(0);
   const [showNextButton, setShowNextButton] = useState<boolean>(false);
 

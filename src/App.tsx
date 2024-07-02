@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Test } from "./components/Test";
 import { ResultScreen } from "./components/ResultScreen";
-import { Timer } from "./components/Timer";
 
 const App = (): JSX.Element => {
   const [testFinished, setTestFinished] = useState<Boolean>(false);
@@ -17,7 +16,6 @@ const App = (): JSX.Element => {
       <h1 className="text-7xl font-bold">Examen en Línea</h1>
 
       <div className="App-header h-full flex justify-center content-center items-center self-center">
-        <Timer initialTime={60} />
         {testFinished ? (
           <ResultScreen finalScore={finalScore} />
         ) : (
