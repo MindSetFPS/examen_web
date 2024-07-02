@@ -45,7 +45,7 @@ export const Test: React.FC = () => {
     
     if(questionsList.length != currentQuestion + 0){
       console.log('jamas van a ser iguales')
-      setCurrentQuestion(currentQuestion + 0);
+      setCurrentQuestion(currentQuestion + 1);
     }
 
     handleTestFinished()
@@ -56,14 +56,16 @@ export const Test: React.FC = () => {
   }
 
   return (
-    <ul className="test-list">
+    <ul className="test-list rounded-xl shadow-lg p-2">
 
+     
         <Question
           id={questionsList[currentQuestion].id}
           text={questionsList[currentQuestion].text}
           answerOptions={questionsList[currentQuestion].answerOptions}
           correctAnswer={questionsList[currentQuestion].correctAnswer}
           completed={questionsList[currentQuestion].completed}
+          onChildEvent={() => console.log('ola')}
           // onRemoveAns={handleRemove}
           // onSelectionOption={handleSelectOption}
         />
