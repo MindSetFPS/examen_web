@@ -5,30 +5,6 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLIC_KEY)
 
-export const questionsList: ListOfQuestions = [
-  {
-    id: 1,
-    text: "¿Cuál es la capital de Francia?",
-    answerOptions: ["No", "París", "Nel", "Nanai"],
-    correctAnswer: "París",
-    completed: false,
-  },
-  {
-    id: 2,
-    text: "¿Cuál es el río más largo del mundo?",
-    answerOptions: ["No", "Nilo", "Nel", "Nanai"],
-    correctAnswer: "Nilo",
-    completed: false,
-  },
-  {
-    id: 3,
-    text: "¿Cuál es el animal más grande el mundo?",
-    answerOptions: ["Jirafa", "Elefante", "Ballena azul", "Hipopotamo"],
-    correctAnswer: "Ballena azul",
-    completed: false,
-  },
-];
-
 interface Props {
   onTestFinished: (data: number) => void;
 }
@@ -39,11 +15,11 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
   const [showNextButton, setShowNextButton] = useState<boolean>(false);
 
   function nextQuestion() {
-    if (questionsList.length != currentQuestion + 1) {
+    if (questions.length != currentQuestion + 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
 
-    if (questionsList.length == currentQuestion + 1) {
+    if (questions.length == currentQuestion + 1) {
       handleTestFinished();
     }
   }
@@ -69,7 +45,6 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
     setQuestions(questions)
   }
 
-
   function handleTestFinished() {
     console.log("test finished");
     onTestFinished(correctAnswerCounter);
@@ -91,7 +66,7 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
       />
       {showNextButton ? (
         <button className="destroy" onClick={() => nextQuestion()}>
-          {questionsList.length == currentQuestion + 1 ? "amonos" : "siguiente"}
+          {questions.length == currentQuestion + 1 ? "amonos" : "siguiente"}
         </button>
       ) : (
         ""
