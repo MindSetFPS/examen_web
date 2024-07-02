@@ -17,6 +17,7 @@ export const Question: React.FC<Props> = ({
   currentQuestion,
   increaseScore,
   onShowNextButton,
+  onTimeout,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(15);
