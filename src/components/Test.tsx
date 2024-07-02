@@ -2,7 +2,7 @@ import { type ListOfQuestions } from "../types";
 import { useState } from "react";
 import { Question } from "./Question";
 
-const questionsList: ListOfQuestions = [
+export const questionsList: ListOfQuestions = [
   {
     id: 1,
     text: "¿Cuál es la capital de Francia?",
@@ -54,7 +54,6 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
 
   return (
     <ul className="test-list rounded-xl shadow-lg p-2">
-      {correctAnswerCounter}
       <Question
         id={questionsList[currentQuestion].id}
         text={questionsList[currentQuestion].text}
@@ -63,8 +62,8 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
         completed={questionsList[currentQuestion].completed}
         increaseScore={() => setCorrectAnswerCounter(correctAnswerCounter + 1)}
         onShowNextButton={() => setShowNextButton(true)}
+        onTimeout={() => setShowNextButton(true)}
       />
-
       {showNextButton ? (
         <button className="destroy" onClick={() => nextQuestion()}>
           {questionsList.length == currentQuestion + 1 ? "amonos" : "siguiente"}
