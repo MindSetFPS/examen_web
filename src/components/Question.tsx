@@ -2,7 +2,7 @@ import { useState } from "react";
 import { type Questions } from "../types";
 
 interface Props extends Questions {
-  onChildEvent: () => void;
+  increaseScore: () => void;
   onShowNextButton: () => void;
 }
 export const Question: React.FC<Props> = ({
@@ -11,7 +11,7 @@ export const Question: React.FC<Props> = ({
   answerOptions,
   correctAnswer,
   completed,
-  onChildEvent,
+  increaseScore,
   onShowNextButton
 }) => {
 
@@ -19,7 +19,9 @@ export const Question: React.FC<Props> = ({
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
-    onChildEvent()
+    if (option == correctAnswer){
+      increaseScore()
+    }
     onShowNextButton()
   }
 

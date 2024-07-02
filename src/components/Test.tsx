@@ -6,21 +6,21 @@ const questionsList: ListOfQuestions = [
   {
     id: 1,
     text: "¿Cuál es la capital de Francia?",
-    answerOptions: ["Madrid", "París", "Roma", "Berlín"],
+    answerOptions: ["No", "París", "Nel", "Nanai"],
     correctAnswer: "París",
     completed: false,
   },
   {
     id: 2,
     text: "¿Cuál es el río más largo del mundo?",
-    answerOptions: ["Amazonas", "Nilo", "Yangtsé", "Misisipi"],
+    answerOptions: ["No", "Nilo", "Nel", "Nanai"],
     correctAnswer: "Nilo",
     completed: false,
   },
 ];
 
 interface Props {
-  onTestFinished: (data: string) => void;
+  onTestFinished: (data: number) => void;
 }
 
 export const Test: React.FC<Props> = ({ onTestFinished }) => {
@@ -42,21 +42,20 @@ export const Test: React.FC<Props> = ({ onTestFinished }) => {
 
   function handleTestFinished() {
     console.log('test finished')
-    onTestFinished(String(correctAnswerCounter))
+    onTestFinished(correctAnswerCounter)
   }
 
   return (
     <ul className="test-list rounded-xl shadow-lg p-2">
+    { correctAnswerCounter }
       <Question
         id={questionsList[currentQuestion].id}
         text={questionsList[currentQuestion].text}
         answerOptions={questionsList[currentQuestion].answerOptions}
         correctAnswer={questionsList[currentQuestion].correctAnswer}
         completed={questionsList[currentQuestion].completed}
-        onChildEvent={() => setCorrectAnswerCounter(correctAnswerCounter + 1)}
+        increaseScore={() => setCorrectAnswerCounter(correctAnswerCounter + 1)}
         onShowNextButton={() => setShowNextButton(true)}
-      // onRemoveAns={handleRemove}
-      // onSelectionOption={handleSelectOption}
       />
 
       {
