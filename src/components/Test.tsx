@@ -1,21 +1,34 @@
 import { type ListOfQuestions } from "../types";
 import { Answer } from "./Answers";
+<<<<<<< HEAD
 import React, { useState } from "react";
 import { Question } from "./Question";
 import { ResultScreen } from "./ResultScreen";
+=======
+import { useState } from "react";
+import { Question } from "./Question";
+>>>>>>> origin/master
 
 interface Props {
   totest: ListOfQuestions;
   onRemoveAns: (id: string) => void;
 }
 
+<<<<<<< HEAD
 export const questionsList: ListOfQuestions = [
+=======
+const questionsList: ListOfQuestions = [
+>>>>>>> origin/master
   {
     id: 1,
     text: "¿Cuál es la capital de Francia?",
     answerOptions: ["Madrid", "París", "Roma", "Berlín"],
     correctAnswer: "París",
+<<<<<<< HEAD
     completed: true,
+=======
+    completed: false,
+>>>>>>> origin/master
   },
   {
     id: 2,
@@ -27,6 +40,7 @@ export const questionsList: ListOfQuestions = [
 ];
 
 export const Test: React.FC = () => {
+<<<<<<< HEAD
   const [questions, setQuestions] = useState<ListOfQuestions>(questionsList);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -59,6 +73,14 @@ export const Test: React.FC = () => {
     );
   }
   /*   const handleRemove = (id: string) => {
+=======
+  
+  const [questions, setQuestions] = useState<ListOfQuestions>(questionsList);
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+
+/*   const handleRemove = (id: string) => {
+>>>>>>> origin/master
     setQuestions((prevQuestions) => prevQuestions.filter((q) => q.id !== id));
   };
 
@@ -67,6 +89,7 @@ export const Test: React.FC = () => {
       prevQuestions.map((q) => (q.id === id ? { ...q, selectedOption } : q))
     );
   };
+<<<<<<< HEAD
   */
   function nextQuestion() {
     if (questionsList.length != currentQuestion + 0) {
@@ -98,6 +121,43 @@ export const Test: React.FC = () => {
       </button>
 
       {/*       {totest.map((item) => (
+=======
+  */ 
+  function nextQuestion(){
+    
+    if(questionsList.length != currentQuestion + 0){
+      console.log('jamas van a ser iguales')
+      setCurrentQuestion(currentQuestion + 0);
+    }
+
+    handleTestFinished()
+  }
+  
+  function handleTestFinished(){
+    //
+  }
+
+  return (
+    <ul className="test-list">
+
+        <Question
+          id={questionsList[currentQuestion].id}
+          text={questionsList[currentQuestion].text}
+          answerOptions={questionsList[currentQuestion].answerOptions}
+          correctAnswer={questionsList[currentQuestion].correctAnswer}
+          completed={questionsList[currentQuestion].completed}
+          // onRemoveAns={handleRemove}
+          // onSelectionOption={handleSelectOption}
+        />
+
+        <button
+          className="destroy"
+          onClick={() => nextQuestion() }
+        > { questionsList.length == currentQuestion + 1 ? 'amonos': 'siguiente'} </button>
+
+
+{/*       {totest.map((item) => (
+>>>>>>> origin/master
         <li key={item.id} className={`${item.completed ? "completed" : ""}`}>
           <Answer
             key={item.id}

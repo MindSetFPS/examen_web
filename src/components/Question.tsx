@@ -18,11 +18,16 @@ export const Question: React.FC<Questions> = ({
 
   const handleOptionChange = (option: string) => {
     setSelectedOption(option);
+<<<<<<< HEAD
+=======
+    // onSelectionOption(id, option);
+>>>>>>> origin/master
   };
   return (
     <div className="view">
       <label>{text}</label>
       <div>
+<<<<<<< HEAD
         <form>
           {answerOptions.map((option, index) => (
             <label htmlFor={option}>
@@ -31,6 +36,21 @@ export const Question: React.FC<Questions> = ({
             </label>
           ))}
         </form>
+=======
+        {answerOptions.map((answerOption) => (
+          <div key={id}>
+            <input
+              type="radio"
+              id={`${id}`}
+              name={`question-${id}`}
+              value={answerOption}
+              // checked={selectedOption === option}
+              // onChange={() => handleOptionChange(option)}
+            />
+            <label htmlFor={`${id}-${answerOption}`}>{answerOption}</label>
+          </div>
+        ))}
+>>>>>>> origin/master
       </div>
       {/* <button
         className="destroy"

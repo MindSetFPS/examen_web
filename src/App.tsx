@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Test } from "./components/Test";
+<<<<<<< HEAD
 import { ResultScreen } from "./components/ResultScreen";
+=======
+import { ResultScreen} from "./components/ResultScreen";
+>>>>>>> origin/master
 
 const App = (): JSX.Element => {
   const [testFinished, setTestFinished] = useState<Boolean>(false);
@@ -10,6 +14,7 @@ const App = (): JSX.Element => {
       <div className="App-header">
         <h1>Examen en Línea</h1>
 
+<<<<<<< HEAD
         {testFinished ? (
           <ResultScreen
             totalCorrect={0}
@@ -21,6 +26,16 @@ const App = (): JSX.Element => {
         ) : (
           <Test />
         )}
+=======
+        {
+          testFinished ? 
+            <ResultScreen/> 
+            : 
+            <Test/>
+          }
+
+
+>>>>>>> origin/master
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { Test, type questionsList } from "./Test";
 
@@ -23,3 +24,14 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
     </div>
   );
 };
+=======
+export  function ResultScreen(){
+    return (
+        <>
+
+            <h1>Pantalla de resultados</h1>
+        
+        </>
+    )
+}
+>>>>>>> origin/master

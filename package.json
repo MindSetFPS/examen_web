@@ -22,7 +22,10 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+<<<<<<< HEAD
     "tailwindcss": "^3.4.4",
+=======
+>>>>>>> origin/master
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
