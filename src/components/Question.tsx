@@ -1,13 +1,12 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { type Questions } from "../types";
 
 interface Props extends Questions {
   increaseScore: () => void;
   onShowNextButton: () => void;
-  onChangeQuestion: () => void;
-  numberOfQuestions: number;
-  currentQuestion: number;
+  onTimeout: () => void;
 }
+
 export const Question: React.FC<Props> = ({
   id,
   text,
@@ -18,74 +17,69 @@ export const Question: React.FC<Props> = ({
   currentQuestion,
   increaseScore,
   onShowNextButton,
-  onChangeQuestion
+  onTimeout,
 }) => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [timeLeft, setTimeLeft] = useState(15);
 
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
-  const [showNextButton, setShowNextButton] = useState<boolean>(false)
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      onTimeout();
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft, onTimeout]);
+
+  useEffect(() => {
+    setTimeLeft(15);
+  }, [id]);
 
   const handleOptionClick = (option: string) => {
-    console.log(selectedOption == null)
-    if (selectedOption == null) {
-      setSelectedOption(option);
+    setSelectedOption(option);
+    if (option === correctAnswer) {
+      increaseScore();
     }
-    if (option == correctAnswer) {
-      increaseScore()
-    }
-
-    setShowNextButton(!showNextButton)
-  }
-  
-  function nextQuestion(e) {
-    e.preventDefault()
-    // if (numberOfQuestions != currentQuestion + 1) {
-      // setCurrentQuestion(currentQuestion + 1);
-      onChangeQuestion() 
-    // }
-    
-    // if (numberOfQuestions == currentQuestion + 1) {
-      // handleTestFinished()
-    // }
-    setSelectedOption(null)
-    setShowNextButton(false)
-  }
-
+    onShowNextButton();
+  };
 
   return (
     <div className="view">
       <h2 className="font-medium text-3xl">{text}</h2>
-      <div >
-        {selectedOption}
+      <p>Time left: {timeLeft} seconds</p>
+      <div>
         <form>
-          {
-            answerOptions.map((option, index) => (
-              <div key={index}>
-                <span >
-                  {'🍿'}
-                </span>
-                <input
-                  type="radio"
-                  value={option}
-                  checked={selectedOption == option}
-                  onChange={() => handleOptionClick(option)} />
-                {option}
-              </div>
-            ))
-          }
-
-          {
-            showNextButton ?
-              <button
-                className="destroy"
-                onClick={(e) => nextQuestion(e)}
-              >
-                {numberOfQuestions == currentQuestion + 1 ? 'amonos' : 'siguiente'}
-              </button>
-              :
-              ''
-          }
-
+          {answerOptions.map((option) => (
+            <div
+              key={option}
+              className={`hover:bg-gray-200 transition rounded-md ${
+                selectedOption === correctAnswer && selectedOption == option
+                  ? "hover:bg-green-200 bg-green-100"
+                  : "bg-red-100"
+              } ${
+                selectedOption != null &&
+                selectedOption == option &&
+                option != correctAnswer
+                  ? "bg-red-100"
+                  : "bg-white"
+              }  `}
+            >
+              {selectedOption == option ? <span>{"🍿"}</span> : ""}
+              <input
+                type="radio"
+                value={option}
+                checked={selectedOption === option}
+                onChange={() => handleOptionClick(option)}
+              />
+              {option}
+            </div>
+          ))}
         </form>
       </div>
-    </div>)
-}
+    </div>
+  );
+};
