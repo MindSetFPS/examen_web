@@ -1,6 +1,9 @@
 import { type ListOfQuestions } from "../types";
 import { useEffect, useState } from "react";
 import { Question } from "./Question";
+import { createClient } from '@supabase/supabase-js'
+
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLIC_KEY)
 
 const questionsList: ListOfQuestions = [
   {
@@ -26,30 +29,54 @@ interface Props {
 export const Test: React.FC<Props> = ({ onTestFinished }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [correctAnswerCounter, setCorrectAnswerCounter] = useState<number>(0);
+  const [questions, setQuestions] = useState(null)
+  
+  useEffect(() => {
+    getQuestions();
+  }, [])
+  
+  useEffect(() => {
+    console.log(questions)
+  }, [questions])
+  
+  async function getQuestions() {
+    let { data: questions, error } = await supabase
+    .from('questions')
+    .select('*')
+            
+    console.log(questions)
+    if(error){
+      console.log(error)
+    }
+    setQuestions(questions)
+  }
+
 
   function handleTestFinished() {
     console.log('test finished')
     onTestFinished(correctAnswerCounter)
   }
 
+  if(!questions) return null;
+
   return (
     <ul className="test-list rounded-xl shadow-lg p-2">
-      {correctAnswerCounter}
+      {currentQuestion}
       <Question
-        id={questionsList[currentQuestion].id}
-        text={questionsList[currentQuestion].text}
-        answerOptions={questionsList[currentQuestion].answerOptions}
-        correctAnswer={questionsList[currentQuestion].correctAnswer}
-        completed={questionsList[currentQuestion].completed}
+        id={questions[currentQuestion].id}
+        text={questions[currentQuestion].text}
+        answerOptions={questions[currentQuestion].answerOptions}
+        correctAnswer={questions[currentQuestion].correctAnswer}
+        completed={questions[currentQuestion].completed}
         increaseScore={() => setCorrectAnswerCounter(correctAnswerCounter + 1)}
-        numberOfQuestions={questionsList.length}
+        numberOfQuestions={questions.length}
         currentQuestion={currentQuestion}
         onChangeQuestion={() => {
-          if (currentQuestion + 1 == questionsList.length) {
+          if (currentQuestion + 1 == questions.length) {
             handleTestFinished()
           }
 
-          if (currentQuestion + 1 != questionsList.length) {
+          if (currentQuestion + 1 != questions.length) {
             setCurrentQuestion(currentQuestion + 1)
           }
         }
