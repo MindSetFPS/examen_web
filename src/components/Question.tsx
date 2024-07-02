@@ -58,8 +58,8 @@ export const Question: React.FC<Props> = ({
         {selectedOption}
         <form>
           {
-            answerOptions.map((option) => (
-              <div >
+            answerOptions.map((option, index) => (
+              <div key={index}>
                 <span >
                   {'🍿'}
                 </span>
