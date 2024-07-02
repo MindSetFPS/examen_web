@@ -28,9 +28,9 @@ export const Question: React.FC<Props> = ({
     console.log(selectedOption == null)
     if (selectedOption == null) {
       setSelectedOption(option);
-      if (selectedOption == correctAnswer) {
-        increaseScore()
-      }
+    }
+    if (option == correctAnswer) {
+      increaseScore()
     }
 
     setShowNextButton(!showNextButton)
